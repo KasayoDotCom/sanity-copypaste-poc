@@ -1,21 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useClient} from 'sanity'
-import {
-  Dialog,
-  Box,
-  Button,
-  Text,
-  Select,
-  Stack,
-  Card,
-  Flex,
-  useToast,
-  Label,
-  Autocomplete,
-} from '@sanity/ui'
-import {SearchIcon} from '@sanity/icons'
-import {isModuleDeclaration} from 'typescript'
-// import {DocumentActionDescription} from '@sanity/base'
+import {Box, Button, Text, Select, Stack, Flex, useToast} from '@sanity/ui'
 
 const CopyPasteAction = ({id, type, onComplete}) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -27,7 +12,6 @@ const CopyPasteAction = ({id, type, onComplete}) => {
   const [targetDoc, setTargetDoc] = useState()
   const [targetArray, setTargetArray] = useState(null)
 
-  console.log('documents:', documents)
   const client = useClient({apiVersion: '2021-10-21'})
   const toast = useToast()
 
@@ -38,8 +22,6 @@ const CopyPasteAction = ({id, type, onComplete}) => {
   const availableDocsSelectOptions = documents.map((doc) => {
     return <option value={JSON.stringify(doc)}>{doc.title}</option>
   })
-
-  console.log('SourceDoc:', sourceDoc)
 
   function getArrayOptionsFromObject(obj) {
     const arrayEntries = Object.entries(obj).filter(([key, value]) => Array.isArray(value))
@@ -85,23 +67,13 @@ const CopyPasteAction = ({id, type, onComplete}) => {
     id: 'copy-paste',
     icon: () => <>📋</>,
     label: 'Copy & Paste',
-    // This function will be called when the user clicks on the action.
-    // We're using it to open the dialog.
     onHandle: () => {
       setIsOpen(true)
     },
-
-    // Here's the dialog component
     dialog: {
       type: 'dialog',
       onClose: () => onComplete,
       content: isOpen && (
-        // <Dialog
-        //   id="copy-paste-dialog"
-        //   header="Copy & Paste"
-        //   onClose={() => setIsOpen(false)}
-        //   zOffset={100}
-        // >
         <Box padding={4}>
           <Stack space={4}>
             <Text size={2} weight="semibold">
@@ -114,7 +86,6 @@ const CopyPasteAction = ({id, type, onComplete}) => {
                 </Text>
                 <Select
                   padding={[3, 3, 4]}
-                  // options={documents}
                   marginBottom={5}
                   placeholder="Select a document"
                   onChange={(option) => setSourceDoc(JSON.parse(option.target.value))}
@@ -134,7 +105,6 @@ const CopyPasteAction = ({id, type, onComplete}) => {
                     padding={[3, 3, 4]}
                     placeholder="Select an array element"
                     onChange={(option) => {
-                      console.log('option.target.value:', JSON.parse(option.target.value))
                       setSourceArray(JSON.parse(option.target.value))
                     }}
                   >
@@ -175,7 +145,6 @@ const CopyPasteAction = ({id, type, onComplete}) => {
                   </Text>
                   <Select
                     padding={[3, 3, 4]}
-                    // options={documents}
                     marginBottom={5}
                     placeholder="Select a document"
                     onChange={(option) => setTargetDoc(JSON.parse(option.target.value))}
@@ -195,7 +164,6 @@ const CopyPasteAction = ({id, type, onComplete}) => {
                       padding={[3, 3, 4]}
                       placeholder="Select an array element"
                       onChange={(option) => {
-                        console.log('option.target.value:', JSON.parse(option.target.value))
                         setTargetArray(JSON.parse(option.target.value))
                       }}
                     >
@@ -218,7 +186,6 @@ const CopyPasteAction = ({id, type, onComplete}) => {
               )}
           </Stack>
         </Box>
-        // </Dialog>
       ),
     },
   }

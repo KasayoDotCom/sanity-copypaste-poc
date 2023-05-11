@@ -3,14 +3,13 @@ import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import CopyPasteAction from './schemas/actions/CopyPasteAction'
-import {DialogAction} from './schemas/actions/DialogAction'
 
 export default defineConfig({
   name: 'default',
   title: 'Sanity Copy&Paste POC',
 
   document: {
-    actions: [CopyPasteAction, DialogAction],
+    actions: [CopyPasteAction],
   },
 
   projectId: '6cerk2j6',
